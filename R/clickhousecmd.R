@@ -90,6 +90,23 @@ relab <- con() |>
     as_tibble()
 relab
 
+## Studies?
+con() |> 
+    dbListFields("src_pubmed")
+
+studies <- con() |> 
+    dbGetQuery(
+    "
+        SELECT COUNT(*) AS n, pmid
+        FROM src_pubmed
+        GROUP BY pmid
+        ORDER BY n DESC
+        LIMIT 100
+    "
+    ) |> 
+    as_tibble()
+studies
+
 ## Disconnect
-dbDisconnect(con())
+# dbDisconnect(con())
 
