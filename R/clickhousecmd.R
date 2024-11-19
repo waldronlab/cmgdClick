@@ -1,8 +1,8 @@
 
 library(DBI)
 library(dplyr)
-library(config)
 
+# setwd("/home/user/Projects/cmgdClick")
 ## Create connection
 # con <- dbConnect(
 #     drv = ClickHouseHTTP::ClickHouseHTTP(),
@@ -20,10 +20,10 @@ con <- function() {
         drv = ClickHouseHTTP::ClickHouseHTTP(),
         port = 8443,
         https = TRUE,
-        host = get()$host,
-        user = get()$user,
-        password = get()$password,
-        dbname = get()$db
+        host = config::get()$host,
+        user = config::get()$user,
+        password = config::get()$password,
+        dbname = config::get()$db
     )
 }
 
