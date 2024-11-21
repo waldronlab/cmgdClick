@@ -1,13 +1,23 @@
 
 # cmgdClick
 
-<!-- badges: start -->
-<!-- badges: end -->
+Not a package (yet).
 
-The goal of cmgdClick is to ...
+## Important note about the config.yml file
 
+Currently, you'll need a **config.yml** file in the home or parent directory of
+this project with your credentials.
 
-## Important
+Make sure that the **config.yml** has been added to the .gitignore file if you
+decide to place the **config.yml** file in the home directory.
 
-You will need a config.yml file here or in the parent dir with the
-user credentials. Make sure config.yml has been added to the .gitignore file.
+Example of the contents of the **config.yml** file:
+
+```
+default:
+  host: "hostAddress"
+  user: "yourUserName"
+  password: "yourPassword"
+  db: "databaseName"
+```
+
