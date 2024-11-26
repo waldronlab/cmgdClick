@@ -1,5 +1,5 @@
 
-# cmgdClick
+# cmdClick
 
 Not a package (yet).
 
