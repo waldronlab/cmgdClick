@@ -20,11 +20,9 @@ devtools::install_local("<path/to/cMDClick/source", dependencies = TRUE)
 
 ## config file
 
-Currently, you'll need a **config.yml** file in the home or parent directory of
-this project with your credentials.
-
-Make sure that the **config.yml** has been added to the .gitignore file if you
-decide to place the **config.yml** file in the home directory.
+Access to the data needs credentials. These could be stored in a `config.yml`
+file and use the [config package](https://github.com/rstudio/config/).
+The `config.yml` file should be in the working or parent director.
 
 Example of the contents of the **config.yml** file:
 
