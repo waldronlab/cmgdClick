@@ -32,6 +32,8 @@ mPr <- cmdGetMarker(con(), features = feat, type = "p")
 ## Get bug relative abundance data
 relab <- cmdGetRelab(con(), features = ncbi_ids)
 
+## TODO convert to matrix
+
 # -------------------------------------------------------------------------
 
 # x <- con() |>
