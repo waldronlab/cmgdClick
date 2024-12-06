@@ -3,7 +3,6 @@ library(cMDClick)
 
 ## Create connection
 ## config.yml file must exist
-setwd("/home/user/Projects/cMDClick")
 con <- function() {
     DBI::dbConnect(
         drv = ClickHouseHTTP::ClickHouseHTTP(),
