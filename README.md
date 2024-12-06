@@ -12,7 +12,7 @@ hosted on ClickHouse.
 gh repo clone waldronlab/cMDClick
 ```
 
-2. Install cMDClick in R with devetools:
+2. Install cMDClick in R with devtools:
 
 ```r
 devtools::install_local("<path/to/cMDClick/source", dependencies = TRUE)
