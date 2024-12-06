@@ -18,7 +18,7 @@ gh repo clone waldronlab/cMDClick
 devtools::install_local("<path/to/cMDClick/source", dependencies = TRUE)
 ```
 
-## config file
+## Credentials
 
 Access to the data needs credentials. These could be stored in a `config.yml`
 file and then use the [config package](https://github.com/rstudio/config/).
