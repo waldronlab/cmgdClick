@@ -24,7 +24,7 @@ Access to the data needs credentials. These could be stored in a `config.yml`
 file and then use the [config package](https://github.com/rstudio/config/).
 The `config.yml` file should be in the working or parent directory.
 
-Example of the contents of the **config.yml** file:
+Example of the contents of the `config.yml` file:
 
 ```
 default:
