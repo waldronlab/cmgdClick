@@ -1,9 +1,16 @@
 
-# cMDClick
+# `cMDClick`
 
-Not a package (yet).
+Package with experiemental functions for fetching curatedMetagenomicData v4
+hosted on ClickHouse.
 
-## Important note about the config.yml file
+## Installation
+
+```r
+BiocManager::install("waldronlab/cMDClick", dependencies = TRUE)
+```
+
+## config file
 
 Currently, you'll need a **config.yml** file in the home or parent directory of
 this project with your credentials.

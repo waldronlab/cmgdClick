@@ -1,12 +1,18 @@
 Package: cMDClick
-Title: What the Package Does (One Line, Title Case)
-Version: 0.99.1
+Title: Access to curatedMetagenomicData hosted on ClickHouse
+Version: 0.99.2
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    c(
+        person(
+            "Samuel", "Gamboa", role = c("aut", "cre"),
+            email = "samuel.gamboa.tuz@gmail.com",
+            comment = c(ORCID = "0000-0002-6863-7943")
+        )
+    )
+Description:
+    This package contains experimental functions for accessing
+    curatedMetagenomicData on ClickHouse.
+License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -15,3 +21,5 @@ Imports:
     config,
     DBI,
     dplyr
+Depends:
+    R (>= 4.4.0)
