@@ -6,8 +6,16 @@ hosted on ClickHouse.
 
 ## Installation
 
+1. Download the repo. For example with the GH client:
+
+```bash
+gh repo clone waldronlab/cMDClick
+```
+
+2. Install cMDClick in R with devetools:
+
 ```r
-BiocManager::install("waldronlab/cMDClick", dependencies = TRUE)
+devtools::install_local("<path/to/cMDClick/source", dependencies = TRUE)
 ```
 
 ## config file
