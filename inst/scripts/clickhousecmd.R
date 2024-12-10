@@ -15,6 +15,19 @@ con <- function() {
     )
 }
 
+con <- function() {
+    DBI::dbConnect(
+        drv = ClickHouseHTTP::ClickHouseHTTP(),
+        port = 8443,
+        https = TRUE,
+        host = keyring::key_get("cmd-host"),
+        user = keyring::key_get("cmd-user"),
+        password = keyring::key_get("cmd-password"),
+        dbname = keyring::key_get("cmd-db")
+    )
+}
+
+
 ## Get relative abundance, filtering by ncbi ids
 relabFeatures <- cmdGetRelab(con(), features = exTaxa)
 head(relabFeatures)

@@ -106,3 +106,17 @@ head(mPr)
 #> 6 SAMEA103958109 UniClust90_CMOGDLIK00463|1__7|SGB72336 TRUE
 ```
 <sup>Created on 2024-12-06 with [reprex v2.1.1](https://reprex.tidyverse.org)</sup>
+
+
+## Command line (Linux)
+
+Connect to the server. Credentials should be saved as environment variables.
+
+```bash
+clickhouse-client \
+    --secure \
+    --host $CMDHOST \
+    --password $CMDPASSWORD \
+    --user $CMDUSER \
+    --database $CMDDB
+```

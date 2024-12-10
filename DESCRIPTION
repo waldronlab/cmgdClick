@@ -1,12 +1,16 @@
 Package: cMDClick
 Title: Access to curatedMetagenomicData hosted on ClickHouse
-Version: 0.99.5
+Version: 0.99.6
 Authors@R: 
     c(
         person(
-            "Samuel", "Gamboa", role = c("aut", "cre"),
+            given = "Samuel", family = "Gamboa", role = c("aut", "cre"),
             email = "samuel.gamboa.tuz@gmail.com",
             comment = c(ORCID = "0000-0002-6863-7943")
+        ),
+        person(
+            given = "Levi", family = "Waldron", role = "aut",
+            comment = c(ORCID = "0000-0003-2725-0694")
         )
     )
 Description:
