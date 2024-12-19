@@ -116,10 +116,14 @@ cmdGetRelab <- function(
 ) {
     id_type <- match.arg(id_type, choices = c("ncbi", "metaphlan"))
     q <- stringr::str_c(
-        "SELECT \"CAST(relative_abundance, 'Float32')\" AS relab, ",
-        "sample_id AS sample, marker_concatenated AS metaphlan, ",
-        "ncbi_tax_id AS ncbi\n",
-        "FROM src_cmgd_v4__bugs_list\n"
+        # "SELECT \"CAST(relative_abundance, 'Float32')\" AS relab, ",
+        "SELECT relative_abundance AS relab, ",
+        "sample_id AS sample, clade_name AS metaphlan, ",
+        # "sample_id AS sample, marker_concatenated AS metaphlan, ",
+        # "ncbi_tax_id AS ncbi\n",
+        "tax_id_string AS ncbi\n",
+        # "FROM src_cmgd_v4__bugs_list\n"
+        "FROM relative_abundance\n"
     )
     if (!is.null(features) && !is.null(samples)) {
         featuresVar <- paste(paste0("'", features, "'"), collapse = ",")
