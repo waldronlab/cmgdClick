@@ -1,0 +1,114 @@
+---
+title: "CMGD Parquet Play"
+format: html
+---
+
+# Background
+
+We have created parquet files from the CMGD data. 
+This is a demonstration of how to read the parquet files into R
+using duckdb. Three tables exist as parquet files living in 
+cloud storage. The tables are:
+
+- Marker abundances
+- Marker presences
+- Metaphlan bugs list
+
+# Setup
+
+Install duckdb, DBI, dbplyr, and dplyr.
+
+Then, load the libraries.
+
+```{r}
+library(duckdb)
+library(DBI)
+library(dbplyr)
+library(dplyr)
+```
+
+# Connect to the database
+
+```{r}
+con <- dbConnect(duckdb::duckdb(), ":memory:")
+```
+
+And set up the ability to read from cloud storage using duckdb:
+
+```{r}
+dbExecute(con, "install httpfs;")
+dbExecute(con, "load httpfs;")
+```
+
+# Create views
+
+Views are created to make it easier to work with the data. They do not make 
+a copy of the data, but instead just provide a way to access the data in a
+more convenient way.
+
+These next few lines will take a while to run because they are reading the
+parquet files from cloud storage. Subsequent runs will often be faster
+because the metadata will be cached. 
+
+```{r}
+dbExecute(con, paste(
+  "create view metaphlan_bugs as select * from",
+  "read_parquet('https://store.cancerdatasci.org/cmgd/cMDv4/metaphlan_bugs.parquet');"
+))
+```
+
+We can check to see that this works by running a query:
+
+```{r}
+dbListTables(con)
+```
+
+# Query the data
+
+Now that we have the data loaded, we can query it. 
+
+```{r}
+dbGetQuery(con, "select * from metaphlan_bugs limit 5;")
+```
+Any SQL query can be run on the data.
+
+As an alternative, we can use dplyr to query the data. 
+
+```{r}
+metaphlan_bugs <- tbl(con, "metaphlan_bugs")
+metaphlan_bugs |>
+  select(sample_id) |>
+  group_by(sample_id) |>
+  summarise(bug_count = n()) |>
+  arrange(desc(bug_count)) |>
+  head(10)
+```
+
+As another example, we can get the metaphlan results for a specific sample:
+
+```{r}
+metaphlan_bugs |>
+  filter(sample_id == "SAMN02334067") |>
+  select(sample_id, clade_name, relative_abundance) |>
+  arrange(desc(relative_abundance)) -> metaphlan_bugs_sample
+
+head(metaphlan_bugs_sample, 50)
+```
+
+You can create tables for the other two parquet files in the same way. The 
+urls of the other two files are:
+
+- https://store.cancerdatasci.org/cmgd/cMDv4/marker_abundances.parquet
+- https://store.cancerdatasci.org/cmgd/cMDv4/marker_presences.parquet
+
+Those files are larger, so working with them will take a little longer, but
+the process is the same.
+
+If you want to work with the parquet files locally, you can download them
+and change the URLs in the `read_parquet` calls to point to the local files.
+This could be faster, but it will require disk space. 
+
+Finally, you can insert the data into a local database if you want to work
+directly with duckdb tables rather than views over parquet files. The speed 
+may increase a bit, but not by a LOT. 
+

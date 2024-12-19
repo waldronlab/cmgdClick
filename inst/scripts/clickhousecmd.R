@@ -27,7 +27,6 @@ con <- function() {
     )
 }
 
-
 ## Get relative abundance, filtering by ncbi ids
 relabFeatures <- cmdGetRelab(con(), features = exTaxa)
 head(relabFeatures)
