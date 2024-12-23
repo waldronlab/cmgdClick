@@ -14,6 +14,7 @@ cmdConnect <- function() {
     dataTypes <- dataOptions
     
     storageBaseURL <- Sys.getenv("CMDDUCKDB")
+    storageBaseURL <- "https://store.cancerdatasci.org/cmgd/cMDv4/"
     readParquetCommands <- paste0(
         "create view ", names(dataTypes), " as select * from ",
         "read_parquet('", storageBaseURL, dataTypes, ".parquet');"
@@ -37,8 +38,10 @@ relab <- as_duckplyr_tibble(dplyr::tbl(con, "relative_abundance"))
 
 relabFeatures <- cmdGetRelab(con, features = exTaxa)
 
-
-
+# system.time({
+#     mrkAb <- as_duckplyr_tibble(dplyr::tbl(con, "marker_abundance"))
+# })
+# 
 
 
 relab |> 
@@ -59,7 +62,7 @@ unique(relab$tax_id_string)
 
 
 
-ra <- dplyr::tbl(con, "relative_abundance")
+# ra <- dplyr::tbl(con, "relative_abundance")
 # mrkPr <- as_duckplyr_tibble(dplyr::tbl(con, "mrkPr"))
 # mrkAb <- as_duckplyr_tibble(dplyr::tbl(con, "mrkAb"))
 
