@@ -13,7 +13,7 @@ cmdConnect <- function() {
     # dataTypes <- dataOptions[types]
     dataTypes <- dataOptions
     
-    storageBaseURL <- Sys.getenv("CMDDUCKDB")
+    # storageBaseURL <- Sys.getenv("CMDDUCKDB")
     storageBaseURL <- "https://store.cancerdatasci.org/cmgd/cMDv4/"
     readParquetCommands <- paste0(
         "create view ", names(dataTypes), " as select * from ",
@@ -35,7 +35,7 @@ dbListTables(con)
 
 relab <- as_duckplyr_tibble(dplyr::tbl(con, "relative_abundance"))
 
-
+## This function only works if the package is loaded
 relabFeatures <- cmdGetRelab(con, features = exTaxa)
 
 # system.time({
