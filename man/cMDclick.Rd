@@ -29,6 +29,16 @@ cMDGetRelab(
   filter_by = c("ncbi_tax_id", "marker_concatenated")
 )
 }
+\arguments{
+\item{con}{A connection created with DBI.}
+
+\item{features}{A \code{character} vector with marker ids.}
+
+\item{samples}{A \code{character} vector with sample names.}
+
+\item{type}{A \code{character(1)} vector. One of two options: "\code{abundance}" or
+"\code{presence}".}
+}
 \value{
 \itemize{
 \item cMDListTables() returns a character vector of table names
