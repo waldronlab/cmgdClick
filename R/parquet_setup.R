@@ -15,7 +15,7 @@
 #' @param verbose `logical(1)` Show informative messages in the console
 #'   (default: `FALSE`).
 #'
-#' @importFrom BiocBaseUtils isScalarCharacter
+#' @importFrom BiocBaseUtils isScalarCharacter isScalarLogical
 #'
 #' @examples
 #' if (interactive()) {
