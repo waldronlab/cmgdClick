@@ -44,6 +44,7 @@
 #'     default:
 #'       host: "localhost"
 #'       user: "default"
+#'       port: 8123
 #'       password: "foo"
 #'       db: "default"
 #'
