@@ -1,8 +1,37 @@
 .DBDIR_MEMORY <- duckdb:::DBDIR_MEMORY
 .STORE_CANCERDATASCI_URL <- "https://store.cancerdatasci.org/cmgd/cMDv4"
 
+#' @title Setup a connection to a DuckDB database with Parquet data
+#'
+#' @description This function creates a connection to a DuckDB database and
+#'   imports Parquet data from <https://store.cancerdatasci.org>.
+#'
+#' @param db `character(1)` The name of the database file (default:
+#'   "cMDClick.duckdb").
+#'
+#' @param dbdir `character(1)` The directory where the database file is stored
+#'   (default: `cMDClickCache()`).
+#'
+#' @param verbose `logical(1)` Show informative messages in the console
+#'   (default: `FALSE`).
+#'
+#' @importFrom BiocBaseUtils isScalarCharacter
+#'
+#' @examples
+#' if (interactive()) {
+#'     con <- parquet_setup()
+#'     parquet_import(con, dataType = "metaphlan_bugs", verbose = TRUE)
+#'     DBI::dbListTables(con)
+#' }
 #' @export
-parquet_setup <- function(db = "cMDClick.duckdb", dbdir = cMDClickCache()) {
+parquet_setup <-
+    function(
+        db = "cMDClick.duckdb",
+        dbdir = cMDClickCache(verbose = verbose),
+        verbose = FALSE
+    )
+{
+    stopifnot(isScalarCharacter(db), isScalarCharacter(dbdir))
 
     if (!identical(dbdir, DBDIR_MEMORY))
         dbdir <- file.path(dbdir, db)
@@ -13,6 +42,13 @@ parquet_setup <- function(db = "cMDClick.duckdb", dbdir = cMDClickCache()) {
     con
 }
 
+#' @rdname parquet_setup
+#'
+#' @param con `duckdb_connection` A connection object to a DuckDB database.
+#'
+#' @param dataType `character()` The type of data to import. Can be one or more
+#'   of "metaphlan_bugs", "marker_abundances", or "marker_presences".
+#'
 #' @export
 parquet_import <-
     function(
@@ -21,6 +57,7 @@ parquet_import <-
         verbose = FALSE
     )
 {
+    stopifnot(isScalarLogical(verbose))
     dataType <- match.arg(dataType, several.ok = TRUE)
 
     for (dt in dataType) {
@@ -36,6 +73,13 @@ parquet_import <-
     con
 }
 
+#' @rdname parquet_setup
+#'
+#' @param cache_dir `character(1)` The directory where the cache is stored.
+#'
+#' @param ask `logical(1)` Ask the user to create the cache directory if it does
+#'   not exist (default: `interactive()`).
+#'
 #' @export
 cMDClickCache <-
     function(
