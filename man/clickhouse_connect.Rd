@@ -7,7 +7,7 @@
 clickhouse_connect(
   dsn = NULL,
   host = config::get()$host,
-  port = 8443,
+  port = config::get()$port,
   database = config::get()$db,
   user = config::get()$user,
   password = config::get()$password
