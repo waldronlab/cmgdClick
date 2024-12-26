@@ -22,6 +22,8 @@
 #'     con <- parquet_setup()
 #'     parquet_import(con, dataType = "metaphlan_bugs", verbose = TRUE)
 #'     DBI::dbListTables(con)
+#'     dplyr::tbl(con, "metaphlan_bugs") |>
+#'         dplyr::filter(tax_id_string == "2|1239||||")
 #' }
 #' @export
 parquet_setup <-
@@ -47,7 +49,8 @@ parquet_setup <-
 #' @param con `duckdb_connection` A connection object to a DuckDB database.
 #'
 #' @param dataType `character()` The type of data to import. Can be one or more
-#'   of "metaphlan_bugs", "marker_abundances", or "marker_presences".
+#'   of "metaphlan_bugs", "marker_abundances", or "marker_presences". By
+#'   default, all three are imported.
 #'
 #' @export
 parquet_import <-

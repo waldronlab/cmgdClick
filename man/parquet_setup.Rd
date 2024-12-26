@@ -37,7 +37,8 @@ cMDClickCache(
 \item{con}{\code{duckdb_connection} A connection object to a DuckDB database.}
 
 \item{dataType}{\code{character()} The type of data to import. Can be one or more
-of "metaphlan_bugs", "marker_abundances", or "marker_presences".}
+of "metaphlan_bugs", "marker_abundances", or "marker_presences". By
+default, all three are imported.}
 
 \item{cache_dir}{\code{character(1)} The directory where the cache is stored.}
 
@@ -53,5 +54,7 @@ if (interactive()) {
     con <- parquet_setup()
     parquet_import(con, dataType = "metaphlan_bugs", verbose = TRUE)
     DBI::dbListTables(con)
+    dplyr::tbl(con, "metaphlan_bugs") |>
+        dplyr::filter(tax_id_string == "2|1239||||")
 }
 }
