@@ -62,7 +62,7 @@ parquet_import <-
 
     for (dt in dataType) {
         file <- file.path(.STORE_CANCERDATASCI_URL, paste0(dt, ".parquet"))
-        pq_cmd <- glue(
+        pq_cmd <- glue::glue(
             "CREATE TABLE {dt} AS SELECT * FROM read_parquet('{file}');"
         )
         if (!dt %in% DBI::dbListTables(con))
