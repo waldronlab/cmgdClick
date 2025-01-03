@@ -35,7 +35,7 @@ parquet_setup <-
 {
     stopifnot(isScalarCharacter(db), isScalarCharacter(dbdir))
 
-    if (!identical(dbdir, DBDIR_MEMORY))
+    if (!identical(dbdir, .DBDIR_MEMORY))
         dbdir <- file.path(dbdir, db)
     con <- DBI::dbConnect(duckdb::duckdb(), dbdir = dbdir)
 
