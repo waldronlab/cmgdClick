@@ -6,6 +6,14 @@
 #' @description This function creates a connection to a DuckDB database and
 #'   imports Parquet data from <https://store.cancerdatasci.org>.
 #'
+#' @details The `parquet_setup` function provides a connection object for use
+#'   with either `parquet_import` or `parquet_tbl` functions. The
+#'   `parquet_import` downloads the entirety of the data and stores it in the
+#'   user's local cache (see `cMDClickCache()`). The `parquet_tbl` function uses
+#'   the connection object to connect to the storage location and allow remote
+#'   querying of the data. Note that `dplyr::collect()` must be used to obtain
+#'   the full data from the server.
+#'
 #' @param db `character(1)` The name of the database file (default:
 #'   "cMDClick.duckdb").
 #'
@@ -21,9 +29,17 @@
 #' if (interactive()) {
 #'     con <- parquet_setup()
 #'     parquet_import(con, dataType = "metaphlan_bugs", verbose = TRUE)
+#'     ## check the local cache for downloaded tables
 #'     DBI::dbListTables(con)
+#'     ## query the local cache and filter
 #'     dplyr::tbl(con, "metaphlan_bugs") |>
-#'         dplyr::filter(tax_id_string == "2|1239||||")
+#'         dplyr::filter(tax_id_string == "2|1239||||") |>
+#'         dplyr::collect()
+#'     ## query the parquet file remotely
+#'     parquet_tbl(con, "metaphlan_bugs") |>
+#'         dplyr::filter(tax_id_string == "2|1239||||") |>
+#'         dplyr::collect()
+#'     DBI::dbDisconnect(con)
 #' }
 #' @export
 parquet_setup <-
@@ -74,6 +90,29 @@ parquet_import <-
             message("Table '", dt, "' already exists in database.")
     }
     con
+}
+
+#' @rdname parquet_setup
+#'
+#' @importFrom dplyr tbl
+#' @importFrom dbplyr sql
+#'
+#' @export
+parquet_tbl <-
+    function(
+        con,
+        dataType = c("metaphlan_bugs", "marker_abundances", "marker_presences"),
+        verbose = FALSE
+    )
+{
+    stopifnot(isScalarLogical(verbose))
+    dataType <- match.arg(dataType, several.ok = FALSE)
+
+    file <- file.path(.STORE_CANCERDATASCI_URL, paste0(dataType, ".parquet"))
+    pq_cmd <- glue::glue(
+        "SELECT * FROM read_parquet('{file}')"
+    )
+    tbl(con, sql(pq_cmd))
 }
 
 #' @rdname parquet_setup

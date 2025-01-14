@@ -3,6 +3,7 @@
 \name{parquet_setup}
 \alias{parquet_setup}
 \alias{parquet_import}
+\alias{parquet_tbl}
 \alias{cMDClickCache}
 \title{Setup a connection to a DuckDB database with Parquet data}
 \usage{
@@ -13,6 +14,12 @@ parquet_setup(
 )
 
 parquet_import(
+  con,
+  dataType = c("metaphlan_bugs", "marker_abundances", "marker_presences"),
+  verbose = FALSE
+)
+
+parquet_tbl(
   con,
   dataType = c("metaphlan_bugs", "marker_abundances", "marker_presences"),
   verbose = FALSE
@@ -49,12 +56,29 @@ not exist (default: \code{interactive()}).}
 This function creates a connection to a DuckDB database and
 imports Parquet data from \url{https://store.cancerdatasci.org}.
 }
+\details{
+The \code{parquet_setup} function provides a connection object for use
+with either \code{parquet_import} or \code{parquet_tbl} functions. The
+\code{parquet_import} downloads the entirety of the data and stores it in the
+user's local cache (see \code{cMDClickCache()}). The \code{parquet_tbl} function uses
+the connection object to connect to the storage location and allow remote
+querying of the data. Note that \code{dplyr::collect()} must be used to obtain
+the full data from the server.
+}
 \examples{
 if (interactive()) {
     con <- parquet_setup()
     parquet_import(con, dataType = "metaphlan_bugs", verbose = TRUE)
+    ## check the local cache for downloaded tables
     DBI::dbListTables(con)
+    ## query the local cache and filter
     dplyr::tbl(con, "metaphlan_bugs") |>
-        dplyr::filter(tax_id_string == "2|1239||||")
+        dplyr::filter(tax_id_string == "2|1239||||") |>
+        dplyr::collect()
+    ## query the parquet file remotely
+    parquet_tbl(con, "metaphlan_bugs") |>
+        dplyr::filter(tax_id_string == "2|1239||||") |>
+        dplyr::collect()
+    DBI::dbDisconnect(con)
 }
 }
