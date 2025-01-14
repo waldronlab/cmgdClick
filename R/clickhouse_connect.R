@@ -53,7 +53,10 @@
 #' clickhouse_connect(
 #'     host = "localhost", port = 8123, database = "default", user = "default"
 #' )
-#'
+#' if (interactive()) {
+#'     con <- clickhouse_connect(dsn = "ClickHouseDSN")
+#'     DBI::dbListTables(conn = con)
+#' }
 #' @export
 clickhouse_connect <- function(
     dsn = NULL,

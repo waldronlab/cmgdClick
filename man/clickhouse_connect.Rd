@@ -70,5 +70,8 @@ file. The configuration file should be located in the user's home directory
 clickhouse_connect(
     host = "localhost", port = 8123, database = "default", user = "default"
 )
-
+if (interactive()) {
+    con <- clickhouse_connect(dsn = "ClickHouseDSN")
+    DBI::dbListTables(conn = con)
+}
 }
